@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { clearComparison, removeProduct } from "@/store/slices/comparisonSlice";
 import { formatPrice, labelFromKey } from "@/utils/format";
 import { StatusPanel } from "../ui/status-panel";
+import { TeamEvaluation } from "./team-evaluation";
 
 export function ComparisonTable() {
   const products = useAppSelector((state) => state.comparison.selectedProducts);
@@ -238,39 +239,15 @@ export function ComparisonTable() {
         ))}
       </div>
 
-      {/* Decision & Verdict Panel */}
-      {products.length >= 2 && recommended ? (
-        <aside className="rounded-2xl border border-cyan-500/40 bg-gradient-to-r from-slate-900 via-slate-900/90 to-cyan-950/30 p-6 shadow-xl shadow-cyan-950/20 backdrop-blur-md">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
-                <p className="text-xs font-black uppercase tracking-widest text-cyan-300">
-                  Veredicto objetivo de la comparación
-                </p>
-              </div>
-              <h2 className="mt-2 text-xl font-black text-white">{recommended.name}</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-300 max-w-3xl">
-                {hasRatings
-                  ? "Recomendación sugerida: mantiene una puntuación destacada frente a los demás comparados con el costo más balanceado."
-                  : "Recomendado como la opción más accesible dentro de esta comparación manteniendo prestaciones equivalentes."}
-                {priceDifference && cheapestProduct ? (
-                  <span className="block mt-1 text-emerald-300 font-semibold">
-                    💡 Margen entre modelos: diferencia de {formatPrice(priceDifference, cheapestProduct.currency)} entre la opción más económica y la más costosa.
-                  </span>
-                ) : null}
-              </p>
-            </div>
-
-            <Link
-              href={`/products/${recommended.source}/${recommended.externalId}`}
-              className="button-primary text-xs font-black px-5 py-2.5"
-            >
-              Elegir este componente
-            </Link>
-          </div>
-        </aside>
-      ) : null}
+      {/* Team Technical Evaluation & Live Opinion Editor by Brayan Matias & Mefi-Boset Castañeda */}
+      <TeamEvaluation
+        products={products}
+        category={category}
+        minPrice={minPrice}
+        maxPrice={maxPrice}
+        cheapestProduct={cheapestProduct}
+        recommended={recommended}
+      />
 
       {/* Smart Side-by-side Table with difference highlights */}
       <div className="overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/40 backdrop-blur-md shadow-2xl">
