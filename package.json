@@ -1,0 +1,12 @@
+{
+  "name": "pc-compare",
+  "private": true,
+  "scripts": {
+    "dev:frontend": "npm --prefix frontend run dev",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix backend run build && npm --prefix frontend run build",
+    "lint": "npm --prefix frontend run lint",
+    "typecheck": "npm --prefix backend run typecheck"
+  }
+}
+
